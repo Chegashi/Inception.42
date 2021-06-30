@@ -1,4 +1,10 @@
-FROM alpine:3.14
-EXPOSE 80/tcp
-# COPY srcs/* tmp/
-# ENTRYPOINT [ "bash", "./tmp/t.sh" ]
+FROM debian:buster
+
+# ARG TAG="mariadb"
+# COPY conf  /
+# COPY tools /
+# EXPOSE 443 80
+# RUN ["apt-get", "-y", "update"]
+# RUN ["apt-get", "-y", "upgrade"]
+# RUN ["apt-get", "install" , "-y", "mariadb-server", "mariadb-client"]
+

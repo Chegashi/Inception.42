@@ -1,0 +1,45 @@
+version: "3"
+services:
+
+    nginx:
+        build : requirements/nginx/.
+        image : "NGINX"
+        ports:
+         - "80:80"
+    # phpmyadmin:
+    #     build : requirements/phpmyadmin
+    #     image : "phpmyadmin"
+
+    # adminer:
+    #     build : requirements/adminer/. 
+    #     image: "adminer"
+
+    # mariadb: 
+    #    build : requirements/mariadb/.
+    #    image : "DB"
+
+    # wordpresse:
+    #    build : requirements/WordPress/.
+	#    image : "WordPress"
+
+    # ftp:
+	#    build : requirements/ftp/.
+	#    image: "ftp"
+
+    # redice:
+    #     build : requirements/redice/.
+
+    # cv:
+    #     build : requirements/cv/.
+	#     image: "cv" 
+         
+
+#db:image:mariadb:restart: always
+# wordpress:image: wordpress_php:restart: always
+# redis: image: redis restart: always
+# Ftp: image: ftp restart: always
+# flask: image: hello_python restart: always
+#adimner image: adminer restart: always
+# php_my admine
+# networks:
+# volumes: DB:WordPress
