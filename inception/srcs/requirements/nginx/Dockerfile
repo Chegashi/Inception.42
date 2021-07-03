@@ -1,8 +1,7 @@
-
-FROM debian
-
-COPY conf  /
-COPY tools /
+FROM debian:buster
+ARG TAG="nginx"
+COPY conf/*  /conf
+COPY tools/* /tools
 EXPOSE 80
 RUN ["apt-get", "-y", "update"]
 RUN ["apt-get", "-y", "upgrade"]

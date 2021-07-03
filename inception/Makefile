@@ -6,7 +6,7 @@
 #    By: mochegri <mochegri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/04 17:18:52 by mochegri          #+#    #+#              #
-#    Updated: 2021/06/28 11:04:32 by mochegri         ###   ########.fr        #
+#    Updated: 2021/07/03 17:45:21 by mochegri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,13 +32,11 @@
 
 NAME = inception
 
-flags = 
+dockerfile_nginx = srcs/requirements/nginx/Dockerfile 
 
 SRCS = 	
 
-$(NAME):
-
-all : $(NAME)
+nginx :  docker build . -t nginx -f $(dockerfile_nginx)
 
 clean:
 

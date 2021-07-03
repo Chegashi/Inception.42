@@ -1,45 +1,42 @@
-version: "3"
-services:
-
+# services:
     nginx:
         build : requirements/nginx/.
-        image : "NGINX"
         ports:
-         - "80:80"
-    # phpmyadmin:
-    #     build : requirements/phpmyadmin
-    #     image : "phpmyadmin"
+            - '80:80'
+        # volumes:
+        #     - ./nginx:/etc/nginx/conf.d
+        #     - ./logs/nginx:/var/log/nginx
+        #     - ./wordpress:/var/www/html
+        links:
+            - wordpress
+        restart: always
 
-    # adminer:
-    #     build : requirements/adminer/. 
-    #     image: "adminer"
+    mariadb:
+        build: requirements/mariadb/.
+        ports:
+            - '3306:3306'
+        # volumes:
+        #     - ./db-data:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=inception_r_p
+        restart: always
 
-    # mariadb: 
-    #    build : requirements/mariadb/.
-    #    image : "DB"
+    wordpress:
+        build: requirements/WordPress/.
+        # image: wordpress:4.7.1-php7.0-fpm:tag
+        ports:
+            - '9000:9000'
+        volumes:
+            - wordpress:/var/www/html
+        environment:
+            - WORDPRESS_DB_NAME=wpdb
+            - WORDPRESS_TABLE_PREFIX=wp_
+            - WORDPRESS_DB_HOST=mariadb
+            - WORDPRESS_DB_PASSWORD=inception_r_p
+        links:
+            - mariadb
+        restart: always
 
-    # wordpresse:
-    #    build : requirements/WordPress/.
-	#    image : "WordPress"
-
-    # ftp:
-	#    build : requirements/ftp/.
-	#    image: "ftp"
-
-    # redice:
-    #     build : requirements/redice/.
-
-    # cv:
-    #     build : requirements/cv/.
-	#     image: "cv" 
-         
-
-#db:image:mariadb:restart: always
-# wordpress:image: wordpress_php:restart: always
-# redis: image: redis restart: always
-# Ftp: image: ftp restart: always
-# flask: image: hello_python restart: always
-#adimner image: adminer restart: always
-# php_my admine
-# networks:
-# volumes: DB:WordPress
+    volumes:
+        # DB:
+        WordPress:
