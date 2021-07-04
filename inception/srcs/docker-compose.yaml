@@ -5,7 +5,7 @@ services:
         ports:
             - '80:80'
         volumes:
-            - ./nginx:/etc/nginx/conf.d/default
+            - ./requirements/nginx/conf/wordpress.conf:/etc/nginx/conf.d/default
             - ./logs/nginx:/var/log/nginx
         links:
             - wordpress

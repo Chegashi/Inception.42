@@ -1,2 +1,1 @@
-service nginx start
-nginx -g 'daemon off;'
+cp tmp/default /etc/nginx/sites-enabled/default

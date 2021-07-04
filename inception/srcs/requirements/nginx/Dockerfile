@@ -1,9 +1,10 @@
 FROM debian:buster
 ARG TAG="nginx"
-COPY conf/*  /conf
-COPY tools/* /tools
+COPY conf/*   tmp/
 EXPOSE 80
 RUN ["apt-get", "-y", "update"]
 RUN ["apt-get", "-y", "upgrade"]
 RUN ["apt-get", "-y", "install", "nginx"]
-CMD ["nginx", "-g", "daemon off;"]    
+RUN ["mkdir", "-p", "/etc/nginx/sites-enabled/"]
+# CMD ["nginx", "-g", "daemon off;"]
+# ENTRYPOINT ["bash", "./tmp/init_nginx.sh" ]
