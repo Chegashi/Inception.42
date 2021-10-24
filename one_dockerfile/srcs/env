@@ -1,0 +1,20 @@
+MYSQL_ROOT_PASSWORD=root_password
+MYSQL_USER=mochgeri_u
+MYSQL_PASSWORD=database_password
+
+database_name=mochegri
+dtabase_user=mochgeri_u
+database_password=database_password
+
+DB_NAME=mochegri
+DB_USER=mochgeri_u
+DB_PASSWORD=database_password
+
+AUTH_KEY='m:&MI&^_]r.v}[M+-up5Z+KjaqvO@U _yp%,G+a0jmp>p]d!:H_m$9l@|:Oh+1Q'
+SECURE_AUTH_KEY='b8Qz,=lL@6>gZDP|L2kAW!T>N1F!3}6yx2;x39$:w5RIm=NeJUKe?YEfMj:|IxC.'
+LOGGED_IN_KEY='{UX?yhnE]:pg-)fWQQ>^!+ >J}#7;J]8lTX4B-v,o{@hT[6A~bUq<I?-F%I{TbLm'
+NONCE_KEY='$4v ~.j-8ByDK;d@kd9boE}_`qrPN D|g ,uZ|@=z+F2;c`rcr;xz7aAuc-cHk.^'
+AUTH_SALT='diM-|/?-%D+X6zxFfW+|*Ln;@+-byn:Z-stz<|0,a3^ecA&w+SX`Cm|}ae@k|-~k'
+SECURE_AUTH_SALT=';-v,aOnn}fu.fqxC,.#?wBe|@H.:o*#w[c}ggCNX|W(;0ivW3;IOsK]=v~t)m{**'
+LOGGED_IN_SALT='QmEBV3K`>E0e1?>a!DeT7-&@2*!n,fTBlqpI%2}<V*[Ko|;flK~~{nfzvv$pD?I5'
+NONCE_SALT='G!9{.c,Y?x:Tbb1)@E-#<Q?GX-UZ_D|%BkP>oq1|>w(/?5,S;DIg9,m`yTWT5N-{'
