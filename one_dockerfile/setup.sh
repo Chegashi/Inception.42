@@ -31,7 +31,7 @@
     chown -R www-data:www-data /var/www/html/mochegri
     mysql < /wp_conf/init_sql.sql
     mysql --user=root --password=@1234567890 mochegri < /wp_conf/mochegri.sql
-    cp -r /var/www/html/mochegri/* /var/www/html/.
+    ln -s /var/www/html/mochegri/index.php /var/www/html/.
 
 #phpmyadmin
     apt install -y php-{mbstring,zip,gd,xml,pear,gettext,cgi}
@@ -49,5 +49,26 @@
     mv adminer-4.7.3.php adminer.php
     chmod 755 -R /var/www/html/Adminer/adminer.
     chown -R www-data:www-data /var/www/html/Adminer/
+
+#ftp
+    apt update
+    apt install vsftpd
+    ufw allow 20/tcp
+    ufw allow 21/tcp
+    cp /etc/vsftpd.conf /etc/vsftpd.conf.orig
+    useradd -m -p 123 test 
+    echo "test" | tee -a /etc/vsftpd.userlist
+    service  vsftpd restart
+
+#site
+    apt-get install python3-pip libssl-dev libffi-dev python3-dev build-essential python3-setuptools -y 
+    apt-get install python3-venv -y 
+    pip3 install --upgrade pip
+    mkdir ~/flaskapp
+    cd ~/flaskapp
+    pip install wheel
+    pip install gunicorn flask
+
 service nginx restart
+
 # cat
