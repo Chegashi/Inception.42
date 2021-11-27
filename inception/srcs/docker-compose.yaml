@@ -5,48 +5,74 @@ services:
         ports:
             - '80:80'
         volumes:
-            - ./requirements/nginx/conf/wordpress.conf:/etc/nginx/conf.d/default
-            - ./logs/nginx:/var/log/nginx
-        # links:
-        #     - wordpress
+            - WordPress:/var/www/html/
+        links:
+            - wordpress
         restart: always
-
-    # mariadb:
-    #     build: requirements/mariadb/.
-    #     ports:
-    #         - '3306:3306'
-    #     volumes:
-    #         - ./db-data:/var/lib/mysql
-    #     environment:
-    #         - MYSQL_ROOT_PASSWORD=inception_r_p
-    #     restart: always
-
-    # wordpress:
-    #     build: requirements/WordPress/.
-    #     image: wordpress:4.7.1-php7.0-fpm:tag
+    mariadb:
+        build: requirements/mariadb/.
+        ports:
+            - '3306:3306'
+        volumes:
+            - DB:/var/lib/mysql
+        restart: always
+    wordpress:
+        build: requirements/WordPress/.
+        ports:
+            - '9000:9000'
+        volumes:
+            - WordPress:/var/www/html/
+        links:
+            - mariadb
+        restart: always
+volumes:
+    WordPress:
+        name : wordpress
+        driver: local
+        driver_opts:
+            type: none
+            o: bind
+            device: ~/goinfre/home/login/data
+    DB:
+        name : DB
+        driver: local
+        driver_opts:
+            type: none
+            o: bind
+            device: ~/goinfre/home/login/data
+    # phpmyadmin:
+    #     build: requirements/phpmyadmin/.
     #     ports:
     #         - '9000:9000'
     #     volumes:
-    #         - WordPress:/var/www/html
-    #     environment:
-    #         - WORDPRESS_DB_NAME=wpdb
-    #         - WORDPRESS_TABLE_PREFIX=wp_
-    #         - WORDPRESS_DB_HOST=mariadb
-    #         - WORDPRESS_DB_PASSWORD=inception_r_p
+    #         - WordPress:/var/www/html/
     #     links:
     #         - mariadb
     #     restart: always
-
-# volumes:
-#     WordPress:
-#         driver: local
-#         driver_opts:
-#             type: 'none'
-#             o: 'bind'
-#             device: '/home/mochegri/data/WordPress'
-#     DB:
-#         driver: local
-#         driver_opts:
-#             type: 'none'
-#             o: 'bind'
-#             device: '/home/mochegri/data/DB'
+    # adminer:
+    #     build: requirements/adminer/.
+    #     ports:
+    #         - '9000:9000'
+    #     volumes:
+    #         - WordPress:/var/www/html/
+    #     links:
+    #         - mariadb
+    #     restart: always
+    # ftp:
+    #     build: requirements/adminer/.
+    #     ports:
+    #         - '9000:9000'
+    #     volumes:
+    #         - WordPress:/var/www/html/
+    #     links:
+    #         - mariadb
+    #     restart: always
+    # site:
+    #     build: requirements/adminer/.
+    #     ports:
+    #         - '9000:9000'
+    #     volumes:
+    #         - WordPress:/var/www/html/
+    #     links:
+    #         - mariadb
+    #     restart: always

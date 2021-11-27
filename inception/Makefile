@@ -6,7 +6,7 @@
 #    By: mochegri <mochegri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/04 17:18:52 by mochegri          #+#    #+#              #
-#    Updated: 2021/07/03 17:45:21 by mochegri         ###   ########.fr        #
+#    Updated: 2021/11/27 10:20:23 by mochegri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,11 +29,7 @@
 # un serveur FTP
 # Création d’un petit site statique,
 # Adminer
-
-NAME = inception
-
-dockerfile_nginx = srcs/requirements/nginx/Dockerfile 
-
+      
 SRCS = 	
 
 nginx :  docker build . -t nginx -f $(dockerfile_nginx)
