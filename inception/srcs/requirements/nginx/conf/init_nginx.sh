@@ -4,6 +4,7 @@ apt-get -y install nginx
 cp /tmp/default /etc/nginx/sites-enabled/default
 cp /tmp/mochegri /etc/nginx/sites-available/mochegri
 ln -s /etc/nginx/sites-available/mochegri /etc/nginx/sites-enabled/
-sleep 5
+sleep 1
 service nginx start
-nginx -g 'daemon off;'
+# nginx -g 'daemon off;'
+cat

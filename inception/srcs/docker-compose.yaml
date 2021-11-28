@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 services:
     nginx:
         build : requirements/nginx/.
@@ -6,7 +6,7 @@ services:
             - '80:80'
         volumes:
             - WordPress:/var/www/html/
-        links:
+        depends_on:
             - wordpress
         restart: always
     mariadb:
@@ -22,24 +22,24 @@ services:
             - '9000:9000'
         volumes:
             - WordPress:/var/www/html/
-        links:
+        depends_on:
             - mariadb
         restart: always
 volumes:
     WordPress:
-        name : wordpress
+        name : WordPress
         driver: local
         driver_opts:
             type: none
             o: bind
-            device: ~/goinfre/home/login/data
+            device: ~/goinfre/home/login/data/WordPress
     DB:
         name : DB
         driver: local
         driver_opts:
             type: none
             o: bind
-            device: ~/goinfre/home/login/data
+            device: ~/goinfre/home/login/data/DB
     # phpmyadmin:
     #     build: requirements/phpmyadmin/.
     #     ports:

@@ -6,4 +6,4 @@ COPY conf/*  /tmp
 RUN apt-get -y update
 RUN apt-get -y upgrade
 RUN apt-get install -y mariadb-server mariadb-client
-# ENTRYPOINT bash /tmp/init_mariadb.sh
+ENTRYPOINT bash /tmp/init_mariadb.sh

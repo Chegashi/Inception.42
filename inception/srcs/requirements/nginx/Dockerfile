@@ -1,7 +1,6 @@
 FROM debian:buster
-ARG nginx_inception
+ARG TAG="nginx"
 COPY conf/*   tmp/
-EXPOSE 8080:80
 # RUN ["apt-get", "-y", "update"]
 # RUN ["apt-get", "-y", "upgrade"]
 # RUN ["apt-get", "-y", "install", "nginx"]

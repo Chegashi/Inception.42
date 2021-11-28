@@ -5,32 +5,29 @@
     # mkdir /etc/nginx/ssl
     # cp  /nginx_conf/mochegri.pem /etc/nginx/ssl/mochegri.pem && cp /nginx_conf/mochegri.key /etc/nginx/ssl/mochegri.key
 
-#php
+#db
+    apt install -y mariadb-server mariadb-client
+    service mysql start
+    # mysql < /wp_conf/init_sql.sql
+    # mysql --user=root --password=@1234567890 mochegri < /wp_conf/mochegri.sql
+
+#php__WP
     apt-get -y update
     apt-get -y upgrade
+    apt-get -y install wget
     apt install -y php-fpm php-mysql php-curl php-gd php-intl php-mbstring php-soap php-xml php-xmlrpc php-zip
-    cp /nginx_conf/default /etc/nginx/sites-enabled/default
+    # cp /nginx_conf/default /etc/nginx/sites-enabled/default
     service php7.3-fpm start
     service  php7.3-fpm restart
-
-#db
-    apt install -y mariadb-server mariadb-client    
-    service mysql start
-
-#wp
-    apt update
-    apt upgrade
-    apt-get -y install wget
-    cp /wp_conf/mochegri /etc/nginx/sites-available/mochegri
-    ln -s /etc/nginx/sites-available/mochegri /etc/nginx/sites-enabled/
+    # cp /wp_conf/mochegri /etc/nginx/sites-available/mochegri
+    # ln -s /etc/nginx/sites-available/mochegri /etc/nginx/sites-enabled/
     wget https://wordpress.org/latest.tar.gz -P /tmp
     mkdir /var/www/html/mochegri
     tar xzf /tmp/latest.tar.gz --strip-components=1 -C /var/www/html/mochegri
     cp /var/www/html/mochegri/wp-config{-sample,}.php
     cp /wp_conf/wp-config.php  /var/www/html/mochegri/wp-config.php
     chown -R www-data:www-data /var/www/html/mochegri
-    mysql < /wp_conf/init_sql.sql
-    mysql --user=root --password=@1234567890 mochegri < /wp_conf/mochegri.sql
+
     ln -s /var/www/html/mochegri/index.php /var/www/html/.
 
 #phpmyadmin
