@@ -29,20 +29,42 @@
 # un serveur FTP
 # Création d’un petit site statique,
 # Adminer
-      
-SRCS = 	
 
-nginx :  docker build . -t nginx -f $(dockerfile_nginx)
+# all :
+# 	docker build -f requirements/nginx/Dockerfile
 
-clean:
+# SRCS = 	
 
-fclean:	clean
+# nginx :  docker build . -t nginx -f $(dockerfile_nginx)
 
-re:		fclean all
+# clean:
 
-run: re
+# fclean:	clean
 
-save : re
+# re:		fclean all
 
-bonus : clean
+# run: re
 
+# save : re
+
+# bonus : clean
+all :
+
+stop:
+	@docker stop $$(docker ps -qa)
+
+rm:
+	@docker rm $$(docker ps -qa)
+
+rmi:
+	@docker rmi -f $$(docker images -qa)
+
+rm_volume:
+	@docker volume rm $$(docker volume ls -q)
+
+rm_network:
+	@docker network rm $$(docker network ls -q)
+
+clean : stop rm rmi rm_volume rm_network 
+
+fclean : clean

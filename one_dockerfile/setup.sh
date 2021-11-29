@@ -24,7 +24,7 @@
     wget https://wordpress.org/latest.tar.gz -P /tmp
     mkdir /var/www/html/mochegri
     tar xzf /tmp/latest.tar.gz --strip-components=1 -C /var/www/html/mochegri
-    cp /var/www/html/mochegri/wp-config{-sample,}.php
+    # cp /var/www/html/mochegri/wp-config{-sample,}.php
     cp /wp_conf/wp-config.php  /var/www/html/mochegri/wp-config.php
     chown -R www-data:www-data /var/www/html/mochegri
 
@@ -60,12 +60,12 @@
 #site
     apt-get install python3-pip libssl-dev libffi-dev python3-dev build-essential python3-setuptools -y 
     apt-get install python3-venv -y 
-    pip3 install --upgrade pip
+    pip3 install --upgrade pip -y
     mkdir ~/flaskapp
     cd ~/flaskapp
-    pip install wheel
-    pip install gunicorn flask
+    pip install wheel -y
+    pip install gunicorn flask -y
 
 service nginx restart
-
+# nginx
 # cat

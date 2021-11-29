@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3'
 services:
     nginx:
         build : requirements/nginx/.
@@ -10,14 +10,26 @@ services:
             - wordpress
         restart: always
     mariadb:
-        build: requirements/mariadb/.
+        image: mariadb
+        build:
+            context: ./requirements/mariadb/.  
+            args:
+                - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+                - MYSQL_USER=${MYSQL_USER}
+                - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+                - DB_NAME=${DB_NAME}
+                - MYSQL_DATABASE=${MYSQL_DATABASE}
+                - WP_NAME=${WP_NAME}
+                - DB_HOST=${DB_HOST}
         ports:
             - '3306:3306'
         volumes:
             - DB:/var/lib/mysql
         restart: always
     wordpress:
-        build: requirements/WordPress/.
+        image: mariadb
+        build:
+            context: requirements/WordPress/.
         ports:
             - '9000:9000'
         volumes:
@@ -32,14 +44,14 @@ volumes:
         driver_opts:
             type: none
             o: bind
-            device: ~/goinfre/home/login/data/WordPress
+            device: /home/mochegri/data/WordPress
     DB:
         name : DB
         driver: local
         driver_opts:
             type: none
             o: bind
-            device: ~/goinfre/home/login/data/DB
+            device:  /home/mochegri/data/DB
     # phpmyadmin:
     #     build: requirements/phpmyadmin/.
     #     ports:
