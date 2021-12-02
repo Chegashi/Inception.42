@@ -1,34 +1,37 @@
 #nginx
     apt-get -y update
     apt-get -y upgrade
-    apt-get -y install nginx vim
+    apt-get -y install nginx vim        #n
     # mkdir /etc/nginx/ssl
     # cp  /nginx_conf/mochegri.pem /etc/nginx/ssl/mochegri.pem && cp /nginx_conf/mochegri.key /etc/nginx/ssl/mochegri.key
 
-#db
-    apt install -y mariadb-server mariadb-client
-    service mysql start
-    # mysql < /wp_conf/init_sql.sql
-    # mysql --user=root --password=@1234567890 mochegri < /wp_conf/mochegri.sql
-
-#php__WP
+#php
     apt-get -y update
     apt-get -y upgrade
-    apt-get -y install wget
     apt install -y php-fpm php-mysql php-curl php-gd php-intl php-mbstring php-soap php-xml php-xmlrpc php-zip
-    # cp /nginx_conf/default /etc/nginx/sites-enabled/default
-    service php7.3-fpm start
+    cp /nginx_conf/default /etc/nginx/sites-enabled/default     #ng
+    service php7.3-fpm start                    #wp
     service  php7.3-fpm restart
-    # cp /wp_conf/mochegri /etc/nginx/sites-available/mochegri
-    # ln -s /etc/nginx/sites-available/mochegri /etc/nginx/sites-enabled/
-    wget https://wordpress.org/latest.tar.gz -P /tmp
-    mkdir /var/www/html/mochegri
-    tar xzf /tmp/latest.tar.gz --strip-components=1 -C /var/www/html/mochegri
-    # cp /var/www/html/mochegri/wp-config{-sample,}.php
-    cp /wp_conf/wp-config.php  /var/www/html/mochegri/wp-config.php
-    chown -R www-data:www-data /var/www/html/mochegri
 
-    ln -s /var/www/html/mochegri/index.php /var/www/html/.
+#db
+    apt install -y mariadb-server mariadb-client    #db
+    service mysql start                             #db
+
+#wp
+    apt update
+    apt upgrade
+    apt-get -y install wget         #wp
+    cp /wp_conf/mochegri /etc/nginx/sites-available/mochegri    #n
+    ln -s /etc/nginx/sites-available/mochegri /etc/nginx/sites-enabled/ #n
+    wget https://wordpress.org/latest.tar.gz -P /tmp    #wp
+    mkdir /var/www/html/mochegri            #Wp
+    tar xzf /tmp/latest.tar.gz --strip-components=1 -C /var/www/html/mochegri   #wp
+    cp /var/www/html/mochegri/wp-config{-sample,}.php               #wp
+    cp /wp_conf/wp-config.php  /var/www/html/mochegri/wp-config.php     #wp
+    chown -R www-data:www-data /var/www/html/mochegri   #wp
+    mysql < /wp_conf/init_sql.sql                   #db
+    mysql --user=root --password=@1234567890 mochegri < /wp_conf/mochegri.sql   #db
+    ln -s /var/www/html/mochegri/index.php /var/www/html/.  #WP
 
 #phpmyadmin
     apt install -y php-{mbstring,zip,gd,xml,pear,gettext,cgi}
@@ -60,12 +63,12 @@
 #site
     apt-get install python3-pip libssl-dev libffi-dev python3-dev build-essential python3-setuptools -y 
     apt-get install python3-venv -y 
-    pip3 install --upgrade pip -y
+    pip3 install --upgrade pip
     mkdir ~/flaskapp
     cd ~/flaskapp
-    pip install wheel -y
-    pip install gunicorn flask -y
+    pip install wheel
+    pip install gunicorn flask
 
 service nginx restart
-# nginx
+
 # cat

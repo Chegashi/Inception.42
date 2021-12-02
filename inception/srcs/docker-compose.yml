@@ -1,0 +1,60 @@
+version: "3"
+networks:
+    inception:
+services:
+    mariadb:
+        image: mariadb
+        build:
+            context: ./requirements/mariadb
+            args:
+              - WP_DB_NAME=${WP_DB_NAME}
+              - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+              - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+              - MYSQL_USER=${MYSQL_USER}
+        container_name: mariadb
+        ports:
+            - 3306:3306
+        volumes:
+            - data_base:/var/lib/mysql/
+        networks:
+            - inception
+        restart: unless-stopped
+    wordpress:
+        container_name: wordpress
+        networks:
+            - inception
+        env_file:
+            - .env
+        build:
+            context: requirements/wordpress
+        ports:
+            - 9000:9000
+        volumes:
+            - wordpress:/var/www/html
+        restart: unless-stopped
+
+    nginx:
+        networks:
+            - inception
+        build:
+            context: requirements/nginx
+        env_file:
+            - .env
+        ports: 
+            - 443:443
+        volumes:
+            - wordpress:/var/www/html
+        restart: unless-stopped
+volumes:
+    wordpress:
+        driver: local
+        driver_opts:
+            type: 'none'
+            o: 'bind'
+            device: ${WP_VOL}
+    data_base:
+        driver: local
+        driver_opts:
+            type: 'none'
+            o: 'bind'
+            device: ${DB_VOL}

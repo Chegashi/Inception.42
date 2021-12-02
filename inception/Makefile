@@ -1,4 +1,4 @@
-# **************************************************************************** #
+## **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -10,61 +10,36 @@
 #                                                                              #
 # **************************************************************************** #
 
-# Makefile build les images Docker via docker-composev
-# container Docker contenant NGINX avec TLSv1.2 ou TLSv1.3 uniquement.
-# Un container Docker contenant WordPress + php-fpm (installé et configuré).
-# Un container Docker contenant MariaDB.
-# Un volume contenant votre base de données WordPress.
-# Un second volume contenant les fichiers de votre site WordPress.
-# Un docker-network qui fera le lien entre vos containers.
-# La ligne network(s) doit être présente dans votre fichier docker-compose.yml.
-# Deux utilisateurs seront présents dans votre base de données WordPress,
-# 	l’un d’eux étant le compte Admin
-# Vos volumes seront disponibles dans le dossier /home/login/data
-# nom de domaine sera mochegri.42.fr
-# variables d’environnement est obligatoire .env afin de stocker vos variables
-# Votre container NGINX doit être le seul point d’entrée de votre
-# 	infrastructure par le port 443 uniquement en utilisant le protocole TLSv1.2 ou TLSv1.3.
-# redis
-# un serveur FTP
-# Création d’un petit site statique,
-# Adminer
+include ./srcs/.env
 
-# all :
-# 	docker build -f requirements/nginx/Dockerfile
+SRC = srcs/docker-compose.yml
 
-# SRCS = 	
-
-# nginx :  docker build . -t nginx -f $(dockerfile_nginx)
-
-# clean:
-
-# fclean:	clean
-
-# re:		fclean all
-
-# run: re
-
-# save : re
-
-# bonus : clean
 all :
+	sudo mkdir -p $(DB_VOL)
+	sudo mkdir -p $(WP_VOL)
+	grep -rnw '/etc/hosts' -e '$(DOMAIN_NAME)' > /dev/null \
+		|| sudo echo "127.0.0.1  mochegri.42.fr" >> /etc/hosts
+	docker-compose -f  ${SRC} up -d
 
-stop:
-	@docker stop $$(docker ps -qa)
+up :
+	docker-compose -f  ${SRC} up -d
+start:
+	docker-compose -f ${SRC} start
+down:
+	docker-compose -f ${SRC} down
+ps:
+	docker-compose -f ${SRC} ps
 
-rm:
-	@docker rm $$(docker ps -qa)
-
-rmi:
-	@docker rmi -f $$(docker images -qa)
-
-rm_volume:
-	@docker volume rm $$(docker volume ls -q)
-
-rm_network:
-	@docker network rm $$(docker network ls -q)
-
-clean : stop rm rmi rm_volume rm_network 
+clean :
+	docker stop $$(docker ps -qa);\
+	docker rm $$(docker ps -qa);\
+	docker rmi -f $$(docker images -qa);\
+	docker volume rm $$(docker volume ls -q);\
+    docker network rm $$(docker network ls -q);
 
 fclean : clean
+	docker system prune -a --force
+	sudo rm -rf ~/data/*
+
+bonus : all
+
